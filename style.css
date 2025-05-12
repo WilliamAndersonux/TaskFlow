@@ -55,6 +55,21 @@ header p {
     border-color: #3498db;
 }
 
+#prioritySelect {
+    padding: 12px 16px;
+    border: 2px solid #e1e8ed;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: white;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+#prioritySelect:focus {
+    border-color: #3498db;
+}
+
 #addTaskBtn {
     padding: 12px 24px;
     background-color: #3498db;
@@ -166,6 +181,31 @@ header p {
 
 .delete-btn:hover {
     background-color: #c0392b;
+}
+
+.priority-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-right: 8px;
+}
+
+.priority-high {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.priority-medium {
+    background-color: #f39c12;
+    color: white;
+}
+
+.priority-low {
+    background-color: #95a5a6;
+    color: white;
 }
 
 @media (max-width: 768px) {

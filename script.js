@@ -23,7 +23,9 @@ class TaskFlow {
 
     addTask() {
         const input = document.getElementById('taskInput');
+        const prioritySelect = document.getElementById('prioritySelect');
         const taskText = input.value.trim();
+        const priority = prioritySelect.value;
 
         if (taskText === '') {
             alert('Please enter a task');
@@ -33,6 +35,7 @@ class TaskFlow {
         const newTask = {
             id: Date.now(),
             text: taskText,
+            priority: priority,
             status: 'todo',
             createdAt: new Date().toISOString()
         };
@@ -41,6 +44,7 @@ class TaskFlow {
         this.saveTasks();
         this.renderTasks();
         input.value = '';
+        prioritySelect.value = 'medium';
     }
 
     saveTasks() {
@@ -56,7 +60,12 @@ class TaskFlow {
         inProgressList.innerHTML = '';
         doneList.innerHTML = '';
 
-        this.tasks.forEach(task => {
+        const sortedTasks = this.tasks.sort((a, b) => {
+            const priorityOrder = { high: 3, medium: 2, low: 1 };
+            return (priorityOrder[b.priority] || 2) - (priorityOrder[a.priority] || 2);
+        });
+
+        sortedTasks.forEach(task => {
             const taskElement = this.createTaskElement(task);
             
             if (task.status === 'todo') {
@@ -72,9 +81,11 @@ class TaskFlow {
     createTaskElement(task) {
         const taskDiv = document.createElement('div');
         taskDiv.className = 'task-item';
+        const priorityBadge = task.priority ? `<span class="priority-badge priority-${task.priority}">${task.priority}</span>` : '';
+        
         taskDiv.innerHTML = `
             <div class="task-content">
-                <span class="task-text">${task.text}</span>
+                <span class="task-text">${priorityBadge}${task.text}</span>
                 <div class="task-actions">
                     ${task.status === 'todo' ? '<button onclick="app.moveTask(' + task.id + ', \'inprogress\')">Start</button>' : ''}
                     ${task.status === 'inprogress' ? '<button onclick="app.moveTask(' + task.id + ', \'done\')">Complete</button>' : ''}
