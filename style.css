@@ -140,20 +140,35 @@ header p {
 .task-content {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
+}
+
+.task-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
 .task-text {
-    flex: 1;
     font-size: 14px;
     color: #2c3e50;
     word-wrap: break-word;
+    margin-bottom: 2px;
+}
+
+.task-timestamp {
+    font-size: 11px;
+    color: #7f8c8d;
+    font-style: italic;
 }
 
 .task-actions {
     display: flex;
     gap: 5px;
     margin-left: 10px;
+    flex-shrink: 0;
+    align-self: center;
 }
 
 .task-actions button {

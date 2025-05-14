@@ -82,10 +82,14 @@ class TaskFlow {
         const taskDiv = document.createElement('div');
         taskDiv.className = 'task-item';
         const priorityBadge = task.priority ? `<span class="priority-badge priority-${task.priority}">${task.priority}</span>` : '';
+        const createdTime = this.formatTime(task.createdAt);
         
         taskDiv.innerHTML = `
             <div class="task-content">
-                <span class="task-text">${priorityBadge}${task.text}</span>
+                <div class="task-main">
+                    <span class="task-text">${priorityBadge}${task.text}</span>
+                    <span class="task-timestamp">Created: ${createdTime}</span>
+                </div>
                 <div class="task-actions">
                     ${task.status === 'todo' ? '<button onclick="app.moveTask(' + task.id + ', \'inprogress\')">Start</button>' : ''}
                     ${task.status === 'inprogress' ? '<button onclick="app.moveTask(' + task.id + ', \'done\')">Complete</button>' : ''}
@@ -95,6 +99,23 @@ class TaskFlow {
             </div>
         `;
         return taskDiv;
+    }
+
+    formatTime(isoString) {
+        if (!isoString) return 'Unknown';
+        const date = new Date(isoString);
+        const now = new Date();
+        const diffInHours = (now - date) / (1000 * 60 * 60);
+        
+        if (diffInHours < 1) {
+            return 'Just now';
+        } else if (diffInHours < 24) {
+            return `${Math.floor(diffInHours)}h ago`;
+        } else if (diffInHours < 24 * 7) {
+            return `${Math.floor(diffInHours / 24)}d ago`;
+        } else {
+            return date.toLocaleDateString();
+        }
     }
 
     moveTask(taskId, newStatus) {
