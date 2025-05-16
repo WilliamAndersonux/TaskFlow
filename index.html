@@ -23,6 +23,13 @@
                 </select>
                 <button id="addTaskBtn">Add Task</button>
             </div>
+
+            <div class="filter-section">
+                <button class="filter-btn active" onclick="app.filterTasks('all')">All</button>
+                <button class="filter-btn" onclick="app.filterTasks('high')">High Priority</button>
+                <button class="filter-btn" onclick="app.filterTasks('medium')">Medium Priority</button>
+                <button class="filter-btn" onclick="app.filterTasks('low')">Low Priority</button>
+            </div>
             
             <div class="task-board">
                 <div class="column" id="todoColumn">

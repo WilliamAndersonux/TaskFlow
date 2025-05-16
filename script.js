@@ -1,6 +1,7 @@
 class TaskFlow {
     constructor() {
         this.tasks = JSON.parse(localStorage.getItem('taskflow-tasks')) || [];
+        this.currentFilter = 'all';
         this.init();
     }
 
@@ -60,7 +61,8 @@ class TaskFlow {
         inProgressList.innerHTML = '';
         doneList.innerHTML = '';
 
-        const sortedTasks = this.tasks.sort((a, b) => {
+        const filteredTasks = this.getFilteredTasks();
+        const sortedTasks = filteredTasks.sort((a, b) => {
             const priorityOrder = { high: 3, medium: 2, low: 1 };
             return (priorityOrder[b.priority] || 2) - (priorityOrder[a.priority] || 2);
         });
@@ -133,6 +135,24 @@ class TaskFlow {
             this.saveTasks();
             this.renderTasks();
         }
+    }
+
+    filterTasks(priority) {
+        this.currentFilter = priority;
+        
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        
+        event.target.classList.add('active');
+        this.renderTasks();
+    }
+
+    getFilteredTasks() {
+        if (this.currentFilter === 'all') {
+            return this.tasks;
+        }
+        return this.tasks.filter(task => task.priority === this.currentFilter);
     }
 }
 
