@@ -120,6 +120,56 @@ header p {
     margin-top: 20px;
 }
 
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .task-board {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .add-task-section {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    #taskInput {
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    .filter-section {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    
+    .filter-btn {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+    
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    .column h3 {
+        font-size: 1.2rem;
+    }
+    
+    .task-actions {
+        flex-direction: column;
+        gap: 3px;
+    }
+    
+    .task-actions button {
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+}
+
 .column {
     background-color: white;
     border-radius: 10px;
