@@ -2,6 +2,7 @@ class TaskFlow {
     constructor() {
         this.tasks = JSON.parse(localStorage.getItem('taskflow-tasks')) || [];
         this.currentFilter = 'all';
+        this.searchQuery = '';
         this.init();
     }
 
@@ -13,12 +14,18 @@ class TaskFlow {
     setupEventListeners() {
         const addBtn = document.getElementById('addTaskBtn');
         const taskInput = document.getElementById('taskInput');
+        const searchInput = document.getElementById('searchInput');
 
         addBtn.addEventListener('click', () => this.addTask());
         taskInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 this.addTask();
             }
+        });
+        
+        searchInput.addEventListener('input', (e) => {
+            this.searchQuery = e.target.value.toLowerCase();
+            this.renderTasks();
         });
     }
 
@@ -149,10 +156,19 @@ class TaskFlow {
     }
 
     getFilteredTasks() {
-        if (this.currentFilter === 'all') {
-            return this.tasks;
+        let filteredTasks = this.tasks;
+        
+        if (this.currentFilter !== 'all') {
+            filteredTasks = filteredTasks.filter(task => task.priority === this.currentFilter);
         }
-        return this.tasks.filter(task => task.priority === this.currentFilter);
+        
+        if (this.searchQuery) {
+            filteredTasks = filteredTasks.filter(task => 
+                task.text.toLowerCase().includes(this.searchQuery)
+            );
+        }
+        
+        return filteredTasks;
     }
 }
 

@@ -69,6 +69,26 @@ header p {
     border-color: #3498db;
 }
 
+.search-section {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 25px;
+}
+
+#searchInput {
+    padding: 10px 16px;
+    border: 2px solid #e1e8ed;
+    border-radius: 25px;
+    font-size: 14px;
+    width: 300px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+#searchInput:focus {
+    border-color: #3498db;
+}
+
 #taskInput {
     padding: 12px 16px;
     border: 2px solid #e1e8ed;
