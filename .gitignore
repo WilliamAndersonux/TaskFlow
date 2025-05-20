@@ -1,25 +1,25 @@
 # dependencies
 node_modules/
-.DS_Store
 /.pnp
 .pnp.js
 
 # testing
 /coverage
-.claude
 yarn-error.log*
 
 # production
 /build
 npm-debug.log*
-.env.local
 
 # misc
+.DS_Store
+.env.local
 .env.development.local
 CLAUDE.md
 .env.test.local
 yarn-debug.log*
 .env.production.local
+.claude
 
 # temp files
 *.tmp
