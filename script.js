@@ -27,6 +27,25 @@ class TaskFlow {
             this.searchQuery = e.target.value.toLowerCase();
             this.renderTasks();
         });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey || e.metaKey) {
+                switch(e.key) {
+                    case 'n':
+                        e.preventDefault();
+                        taskInput.focus();
+                        break;
+                    case 'f':
+                        e.preventDefault();
+                        searchInput.focus();
+                        break;
+                    case 's':
+                        e.preventDefault();
+                        this.exportTasks();
+                        break;
+                }
+            }
+        });
     }
 
     addTask() {
@@ -169,6 +188,48 @@ class TaskFlow {
         }
         
         return filteredTasks;
+    }
+
+    exportTasks() {
+        const data = JSON.stringify(this.tasks, null, 2);
+        const blob = new Blob([data], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `taskflow-backup-${new Date().toISOString().split('T')[0]}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+    importTasks() {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.json';
+        
+        input.onchange = (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    try {
+                        const importedTasks = JSON.parse(e.target.result);
+                        if (confirm('This will replace all current tasks. Continue?')) {
+                            this.tasks = importedTasks;
+                            this.saveTasks();
+                            this.renderTasks();
+                        }
+                    } catch (error) {
+                        alert('Invalid file format');
+                    }
+                };
+                reader.readAsText(file);
+            }
+        };
+        
+        input.click();
     }
 }
 
